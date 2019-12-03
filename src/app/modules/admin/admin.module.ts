@@ -8,6 +8,7 @@ import { AdminLandingComponent } from './components/admin-landing/admin-landing.
 import { LaunchSurveyComponent } from './components/launch-survey/launch-survey.component';
 import { AnalyzeSurveyComponent } from './components/analyze-survey/analyze-survey.component';
 import { AddQuestionComponent } from './components/add-question/add-question.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { AddQuestionComponent } from './components/add-question/add-question.com
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     AddQuestionComponent

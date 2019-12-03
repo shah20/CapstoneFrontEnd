@@ -1,26 +1,53 @@
-<div class="row">
-    <div class="col">Enter your question</div>
-</div>
-<div class="row form-group">
-    <div class="col"><input type="text" class="form-control" /></div>
-</div>
-
-<div class="row">
-    <div class="col">Enter response type</div>
-</div>
-<div class="row form-group">
-    <div class="col">
-        <select class="custom-select">
-            <option selected>Single Line</option>
-            <option value="1">Multi Line</option>
-            <option value="2">Single Select option</option>
-            <option value="3">multi select option</option>
-        </select>
+<form [formGroup]="questionForm">
+    <div class="row">
+        <div class="col">Enter your question</div>
     </div>
-</div>
-<div class="row">
-    <div class="col">Validation</div>
-</div>
-<div class="row">
-    <div class="col">Validation</div>
-</div>
+    <div class="row form-group">
+        <div class="col"><input formControlName="question" type="text" class="form-control" /></div>
+    </div>
+
+    <div class="row">
+        <div class="col">Enter response type</div>
+    </div>
+    <div class="row form-group">
+        <div class="col">
+            <select formControlName="responseType" class="custom-select">
+                <option *ngFor="let option of responseType" [value]="option.value">{{option.label}}</option>
+            </select>
+        </div>
+    </div>
+    <ng-container *ngIf="questionForm.value.responseType === 'SL'">
+        <div class="row">
+            <div class="col">Validation</div>
+        </div>
+        <div class="row">
+            <div class="col" *ngFor="let validation of validations">
+                <label class="radio-inline"><input type="radio" formControlName="validation" name="validation" [value]="validation.value" checked>{{validation.label}}</label>
+            </div>
+        </div>
+    </ng-container>
+</form>
+    <ng-container *ngIf="questionForm.value.responseType === 'SSO' || questionForm.value.responseType === 'MSO'">
+        <div class="row">
+            <div class="col">
+                Options:=> {{options.join(',')}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                Add Options
+            </div>
+        <!-- </div>
+        <div class="row"> -->
+            <div class="col-3">
+                <input [(ngModel)]="optionTextBox" type="text" class="form-control" />
+            </div>
+            <div class="col-3">
+                <button [disabled]="options.length===4 || optionTextBox === ''" type="button" class="btn btn-primary" (click)="addOption()">Add Option</button>
+            </div>
+        </div>
+    </ng-container>
+    <br/>
+    <div class="row">
+        <div class="col"><button [disabled]="questionForm.invalid" type="button" class="btn btn-primary" (click)="addQuestion()">{{dialogData.form?'Update Question':'Add Question'}}</button></div>
+    </div>
