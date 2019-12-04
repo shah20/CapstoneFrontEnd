@@ -1,1 +1,24 @@
-<p>launch-survey works!</p>
+<br/>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Survey Name</th>
+        <th scope="col">No. of Questions</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let survey of surveyList;let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{survey.surveyName}}</td>
+            <td>{{survey.questions.length}}</td>
+            <td>
+                <i (click)="launchSurvey(survey)" class="fa fa-cloud-upload" style="margin-right:10px;cursor:pointer" title="Launch"></i>
+            </td>
+        </tr>
+        <tr *ngIf="surveyList.length === 0">
+            <th scope="row">No Survey added</th>
+        </tr>
+    </tbody>
+</table>

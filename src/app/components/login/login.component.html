@@ -10,3 +10,7 @@
     <div class="col-2"></div>
     <div class="col-2"><button type="button" class="btn btn-primary" (click)="login()">Submit</button></div>
 </div>
+<div class="row form-group" *ngIf="showError">
+    <div class="col-2"></div>
+    <div class="col-2">Invalid credentails</div>
+</div>

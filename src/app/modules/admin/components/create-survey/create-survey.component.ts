@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AddQuestionComponent } from '../add-question/add-question.component';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AdminService } from 'src/app/services/admin-service/admin.service';
 
 @Component({
   selector: 'app-create-survey',
@@ -28,7 +29,8 @@ export class CreateSurveyComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private adminService: AdminService
   ) { }
 
   ngOnInit() {
@@ -36,7 +38,8 @@ export class CreateSurveyComponent implements OnInit {
     this.surveyForm = this.formBuilder.group({
       surveyName: ['', [Validators.required]],
       questions: this.questionsFormArray,
-      createdOn: []
+      createdOn: [],
+      status: ['DRAFT']
     });
   }
 
@@ -71,6 +74,15 @@ export class CreateSurveyComponent implements OnInit {
   submitSurvey() {
     this.surveyForm.get('createdOn').setValue(new Date().getTime());
     console.log('survey', this.surveyForm.value);
+    const data = JSON.parse(JSON.stringify(this.surveyForm.value));
+    data.questions.forEach((question) => {
+      question.options = question.options.join(',');
+    });
+    this.adminService.saveSurvey(data).subscribe((resp: any) => {
+      if (resp.result) {
+        console.log('saved');
+      }
+    });
   }
 
   editQuestion(questionForm, index) {
