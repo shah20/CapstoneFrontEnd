@@ -8,12 +8,15 @@ import { AppComponent } from './app.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material';
+import { TakeSurveyComponent } from './components/take-survey/take-survey.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    LoginComponent
+    LoginComponent,
+    TakeSurveyComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

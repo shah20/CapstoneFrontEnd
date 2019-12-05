@@ -1,4 +1,7 @@
 <br/>
+<h5>
+    Draft
+</h5>
 <table class="table">
     <thead>
       <tr>
@@ -9,16 +12,46 @@
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let survey of surveyList;let i=index">
+        <tr *ngFor="let survey of allSurveys | surveyFilter : 'DRAFT';let i=index">
             <th scope="row">{{i+1}}</th>
             <td>{{survey.surveyName}}</td>
             <td>{{survey.questions.length}}</td>
             <td>
-                <i (click)="launchSurvey(survey)" class="fa fa-cloud-upload" style="margin-right:10px;cursor:pointer" title="Launch"></i>
+                <i (click)="launchSurvey(survey)" class="fa fa-cloud-upload" style="margin-right:10px;cursor:pointer" title="Publish"></i>
+                <i (click)="editSurvey(survey)" class="fa fa-pencil" style="margin-right:10px;cursor:pointer" title="Edit"></i>
+                <i (click)="deleteSurvey(survey)" class="fa fa-trash" style="cursor:pointer" title="Delete"></i>
             </td>
         </tr>
-        <tr *ngIf="surveyList.length === 0">
-            <th scope="row">No Survey added</th>
+        <tr *ngIf="allSurveys.length === 0">
+            <th scope="row">No Survey created</th>
+        </tr>
+    </tbody>
+</table>
+<br/>
+<h5>
+    Published
+</h5>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Survey Name</th>
+        <th scope="col">No. of Questions</th>
+        <th scope="col">Survey Link</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let survey of allSurveys | surveyFilter : 'PUBLISHED';let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{survey.surveyName}}</td>
+            <td>{{survey.questions.length}}</td>
+            <td>
+                <span (click)="copyData(survey.id)" style="cursor:pointer" title="Click to copy link">{{takeSurveyLink + survey.id}}</span>
+                <span id="copyContainer"></span>
+            </td>
+        </tr>
+        <tr *ngIf="allSurveys.length === 0">
+            <th scope="row">No Survey Published</th>
         </tr>
     </tbody>
 </table>

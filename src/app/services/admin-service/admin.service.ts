@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { FormGroup, FormArray } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,11 @@ import { environment } from 'src/environments/environment';
 export class AdminService {
 
   serviceUrl = environment.serviceUrl;
+
+  public questionsFormArray: FormArray;
+  public surveyForm: FormGroup;
+  public editFlag = false;
+  surveyToEdit: number;
 
   constructor(
     private http: HttpClient
@@ -21,12 +27,20 @@ export class AdminService {
     return this.http.post(this.serviceUrl + '/admin/saveSurvey', data);
   }
 
-  getAllDraftSurveys() {
-    return this.http.get(this.serviceUrl + '/admin/getAllDraftSurveys');
+  getAllSurveys() {
+    return this.http.get(this.serviceUrl + '/admin/getAllSurveys');
+  }
+
+  getSurvey(id) {
+    return this.http.get(this.serviceUrl + '/admin/getSurvey/' + id);
   }
 
   launchSurvey(data) {
     return this.http.put(this.serviceUrl + '/admin/launchSurvey', data);
+  }
+
+  deleteSurvey(id) {
+    return this.http.delete(this.serviceUrl + '/admin/deleteSurvey/' + id);
   }
 
 }

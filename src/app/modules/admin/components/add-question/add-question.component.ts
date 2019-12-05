@@ -45,7 +45,8 @@ export class AddQuestionComponent implements OnInit {
       question: [question.question, [Validators.required]],
       responseType: [question.responseType, [Validators.required]],
       validation: [question.validation],
-      options: [this.options]
+      options: [this.options],
+      id: [question.id]
     });
   }
 

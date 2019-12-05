@@ -3,6 +3,10 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AddQuestionComponent } from '../add-question/add-question.component';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from 'src/app/services/admin-service/admin.service';
+import { Survey } from '../../model/Survey.model';
+import { Question } from '../../model/Question.model';
+import { Router } from '@angular/router';
+import { UtilityService } from 'src/app/services/utility-service/utility-service.service';
 
 @Component({
   selector: 'app-create-survey',
@@ -24,22 +28,52 @@ export class CreateSurveyComponent implements OnInit {
     {label: 'AlphaNumeric', value: 'AN'},
     {label: 'Number Only', value: 'NT'}
   ];
-  questionsFormArray: FormArray;
-  surveyForm: FormGroup;
+
 
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private adminService: AdminService
+    public adminService: AdminService,
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit() {
-    this.questionsFormArray = new FormArray([]);
-    this.surveyForm = this.formBuilder.group({
-      surveyName: ['', [Validators.required]],
-      questions: this.questionsFormArray,
-      createdOn: [],
-      status: ['DRAFT']
+    if (this.adminService.surveyToEdit) {
+      this.adminService.getSurvey(this.adminService.surveyToEdit).subscribe((survey: any) => {
+        survey.resultObject.questions.map((question: any) => {
+          if (question.options.length === 0) {
+            question.options = [];
+          } else {
+            question.options = question.options.split(',');
+          }
+        });
+        this.formInitialize(survey.resultObject);
+      })
+    } else {
+      this.formInitialize(new Survey());
+    }
+  }
+
+  formInitialize(survey: Survey) {
+    this.adminService.questionsFormArray = new FormArray([]);
+    survey.questions.forEach((question: Question) => {
+      const questionForm = this.formBuilder.group({
+        question: [question.question, [Validators.required]],
+        responseType: [question.responseType, [Validators.required]],
+        validation: [question.validation],
+        options: [question.options],
+        id: [question.id]
+      });
+      this.adminService.questionsFormArray.push(questionForm);
+    });
+    this.adminService.surveyForm = this.formBuilder.group({
+      surveyName: [survey.surveyName, [Validators.required]],
+      questions: this.adminService.questionsFormArray,
+      createdOn: [survey.createdOn],
+      status: [survey.status],
+      id: [survey.id],
+      validTill: [survey.validTill]
     });
   }
 
@@ -55,7 +89,7 @@ export class CreateSurveyComponent implements OnInit {
 
     dialog.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.questionsFormArray.push(result.data);
+        this.adminService.questionsFormArray.push(result.data);
       }
     });
   }
@@ -72,15 +106,27 @@ export class CreateSurveyComponent implements OnInit {
   }
 
   submitSurvey() {
-    this.surveyForm.get('createdOn').setValue(new Date().getTime());
-    console.log('survey', this.surveyForm.value);
-    const data = JSON.parse(JSON.stringify(this.surveyForm.value));
+    let snackBarMessage = 'Survey updated successfully';
+    if (!this.adminService.surveyToEdit) {
+      this.adminService.surveyForm.get('createdOn').setValue(new Date().getTime());
+      snackBarMessage = 'Survey created successfully';
+    }
+    console.log('survey', this.adminService.surveyForm.value);
+    const data = JSON.parse(JSON.stringify(this.adminService.surveyForm.value));
+    if (data.validTill) {
+      data.validTill = new Date(data.validTill).getTime();
+    }
     data.questions.forEach((question) => {
       question.options = question.options.join(',');
     });
     this.adminService.saveSurvey(data).subscribe((resp: any) => {
       if (resp.result) {
         console.log('saved');
+        this.adminService.surveyForm.reset();
+        this.adminService.questionsFormArray = this.formBuilder.array([]);
+        this.adminService.surveyToEdit = null;
+        this.utilityService.openSnackBar(snackBarMessage, 'Ok');
+        this.router.navigate(['admin/launchSurvey']);
       }
     });
   }
@@ -98,13 +144,12 @@ export class CreateSurveyComponent implements OnInit {
 
     dialog.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.questionsFormArray.controls[index].setValue(result.data.value);
-        // this.questionsFormArray.push(result.data);
+        this.adminService.questionsFormArray.controls[index].setValue(result.data.value);
       }
     });
   }
 
   deleteQuestion(index) {
-    this.questionsFormArray.removeAt(index);
+    this.adminService.questionsFormArray.removeAt(index);
   }
 }

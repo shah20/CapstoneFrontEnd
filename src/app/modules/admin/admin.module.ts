@@ -9,10 +9,12 @@ import { LaunchSurveyComponent } from './components/launch-survey/launch-survey.
 import { AnalyzeSurveyComponent } from './components/analyze-survey/analyze-survey.component';
 import { AddQuestionComponent } from './components/add-question/add-question.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SurveyFilterPipe } from 'src/app/pipes/survey-filter/survey-filter.pipe';
 
 
 @NgModule({
-  declarations: [AdminLandingComponent, CreateSurveyComponent, LaunchSurveyComponent, AnalyzeSurveyComponent, AddQuestionComponent],
+  declarations: [AdminLandingComponent, CreateSurveyComponent, LaunchSurveyComponent, AnalyzeSurveyComponent, AddQuestionComponent,
+    SurveyFilterPipe],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -22,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   entryComponents: [
     AddQuestionComponent
+  ],
+  providers: [
   ]
 })
 export class AdminModule { }

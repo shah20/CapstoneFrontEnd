@@ -3,4 +3,5 @@ export class Question {
     responseType = '';
     validation = '';
     options = [];
+    id: number;
 }

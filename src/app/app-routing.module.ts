@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/login/login.component';
+import { TakeSurveyComponent } from './components/take-survey/take-survey.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,9 @@ const routes: Routes = [
   },
   {
     path: 'admin', loadChildren: './modules/admin/admin.module#AdminModule'
+  },
+  {
+    path: 'takeSurvey', component: TakeSurveyComponent
   }
 ];
 

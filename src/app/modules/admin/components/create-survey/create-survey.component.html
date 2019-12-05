@@ -1,11 +1,17 @@
 <br/>
-<form [formGroup]="surveyForm">
+<form [formGroup]="adminService.surveyForm">
     <div class="row form-group">
         <div class="col-2">
             Survey Name
         </div>
         <div class="col-2">
             <input type="text" formControlName="surveyName" class="form-control" />
+        </div>
+        <div class="col-2">
+            Valid Till
+        </div>
+        <div class="col-2">
+            <input type="date"  class="form-control"  formControlName="validTill" />
         </div>
     </div>
 </form>
@@ -21,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let que of questionsFormArray.controls;let i=index">
+            <tr *ngFor="let que of adminService.questionsFormArray.controls;let i=index">
                 <th scope="row">{{i+1}}</th>
                 <td>{{que.value.question}}</td>
                 <td>{{getLabelFromValue('responseType', que.value.responseType)}}</td>
@@ -32,7 +38,7 @@
                     <i (click)="deleteQuestion(i)" class="fa fa-trash" style="cursor:pointer" title="Delete"></i>
                 </td>
             </tr>
-            <tr *ngIf="questionsFormArray.controls.length === 0">
+            <tr *ngIf="adminService.questionsFormArray.controls.length === 0">
                 <th scope="row">No Question added</th>
             </tr>
         </tbody>
@@ -42,6 +48,6 @@
         <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
     </div>
     <div class="col-2">
-        <button type="button" [disabled]="surveyForm.invalid || questionsFormArray.controls.length === 0" class="btn btn-primary" (click)="submitSurvey()">Submit</button>
+        <button type="button" [disabled]="adminService.surveyForm.invalid || adminService.questionsFormArray.controls.length === 0" class="btn btn-primary" (click)="submitSurvey()">Submit</button>
     </div>
 </div>
