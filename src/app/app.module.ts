@@ -10,13 +10,17 @@ import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material';
 import { TakeSurveyComponent } from './components/take-survey/take-survey.component';
+import { ListSurveysComponent } from './components/list-surveys/list-surveys.component';
+import { SurveyRendererComponent } from './components/survey-renderer/survey-renderer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     LoginComponent,
-    TakeSurveyComponent
+    TakeSurveyComponent,
+    ListSurveysComponent,
+    SurveyRendererComponent
   ],
   imports: [
     BrowserModule,

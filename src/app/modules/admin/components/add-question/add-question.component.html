@@ -3,7 +3,13 @@
         <div class="col">Enter your question</div>
     </div>
     <div class="row form-group">
-        <div class="col"><input formControlName="question" type="text" class="form-control" /></div>
+        <div class="col">
+            <input formControlName="question" type="text" class="form-control" />
+            <div style="font-size: 80%;color: #dc3545;"
+            *ngIf="questionForm.controls['question'].touched && questionForm.controls['question'].hasError('required')">
+            Question is required
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -11,9 +17,14 @@
     </div>
     <div class="row form-group">
         <div class="col">
-            <select formControlName="responseType" class="custom-select">
+            <select formControlName="responseType"  class="custom-select">
                 <option *ngFor="let option of responseType" [value]="option.value">{{option.label}}</option>
             </select>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col">
+            <label class="radio-inline"><input type="checkbox" formControlName="isMandatory" name="isMandatory" [value]="true" checked>Is mandatory?</label>
         </div>
     </div>
     <ng-container *ngIf="questionForm.value.responseType === 'SL'">
@@ -41,9 +52,12 @@
         <div class="row"> -->
             <div class="col-3">
                 <input [(ngModel)]="optionTextBox" type="text" class="form-control" />
+                <div *ngIf="showErrorMessage && options.length === 0" style="font-size: 80%;color: #dc3545;">
+                        Please add options
+                </div>
             </div>
             <div class="col-3">
-                <button [disabled]="options.length===4 || optionTextBox === ''" type="button" class="btn btn-primary" (click)="addOption()">Add Option</button>
+                <button [disabled]="options.length===4 || optionTextBox === ''" type="button" class="btn btn-primary" (click)="addOption()">Add Option</button> 
             </div>
         </div>
     </ng-container>

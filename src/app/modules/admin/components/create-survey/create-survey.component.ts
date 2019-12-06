@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AddQuestionComponent } from '../add-question/add-question.component';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { UtilityService } from 'src/app/services/utility-service/utility-service
   templateUrl: './create-survey.component.html',
   styleUrls: ['./create-survey.component.css']
 })
-export class CreateSurveyComponent implements OnInit {
+export class CreateSurveyComponent implements OnInit, OnDestroy {
 
   responseType = [
     {label: 'Single Line', value: 'SL'},
@@ -26,7 +26,7 @@ export class CreateSurveyComponent implements OnInit {
   validations = [
     {label: 'Alphabets Only', value: 'AO'},
     {label: 'AlphaNumeric', value: 'AN'},
-    {label: 'Number Only', value: 'NT'}
+    {label: 'Number Only', value: 'NO'}
   ];
 
 
@@ -53,6 +53,10 @@ export class CreateSurveyComponent implements OnInit {
     } else {
       this.formInitialize(new Survey());
     }
+  }
+
+  ngOnDestroy() {
+    this.adminService.surveyToEdit = null;
   }
 
   formInitialize(survey: Survey) {

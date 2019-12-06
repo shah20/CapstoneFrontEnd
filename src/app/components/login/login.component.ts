@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin-service/admin.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,20 +13,27 @@ export class LoginComponent implements OnInit {
   userName: string;
   password: string;
   showError = false;
+  logInForm: FormGroup;
 
   constructor(
     private router: Router,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.formInitialize();
+  }
+
+  formInitialize() {
+    this.logInForm = this.formBuilder.group({
+      userName: ['', [Validators.required]],
+      password: ['', Validators.required]
+    });
   }
 
   login() {
-    // if(this.userName === 'admin' && this.password === 'admin') {
-    //   this.router.navigate(['/admin'])
-    // }
-    this.adminService.login({userName: this.userName, password: this.password}).subscribe((resp: any) => {
+    this.adminService.login(this.logInForm.value).subscribe((resp: any) => {
       if (resp.result) {
         this.router.navigate(['/admin']);
       } else {

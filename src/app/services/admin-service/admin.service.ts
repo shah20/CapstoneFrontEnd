@@ -12,7 +12,6 @@ export class AdminService {
 
   public questionsFormArray: FormArray;
   public surveyForm: FormGroup;
-  public editFlag = false;
   surveyToEdit: number;
 
   constructor(
@@ -41,6 +40,10 @@ export class AdminService {
 
   deleteSurvey(id) {
     return this.http.delete(this.serviceUrl + '/admin/deleteSurvey/' + id);
+  }
+
+  getPublishedSurveys() {
+    return this.http.delete(this.serviceUrl + '/admin/getPublishedSurvey')
   }
 
 }

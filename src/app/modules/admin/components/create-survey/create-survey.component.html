@@ -6,6 +6,10 @@
         </div>
         <div class="col-2">
             <input type="text" formControlName="surveyName" class="form-control" />
+            <div style="font-size: 80%;color: #dc3545;"
+            *ngIf="adminService.surveyForm.controls['surveyName'].touched && adminService.surveyForm.controls['surveyName'].hasError('required')">
+            Survey name is required
+            </div>
         </div>
         <div class="col-2">
             Valid Till

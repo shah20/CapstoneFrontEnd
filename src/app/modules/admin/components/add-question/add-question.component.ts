@@ -11,6 +11,7 @@ import { Question } from '../../model/Question.model';
 export class AddQuestionComponent implements OnInit {
 
   questionForm: FormGroup;
+  showErrorMessage = false;
 
   @Input()
   responseType;
@@ -45,15 +46,20 @@ export class AddQuestionComponent implements OnInit {
       question: [question.question, [Validators.required]],
       responseType: [question.responseType, [Validators.required]],
       validation: [question.validation],
+      isMandatory: [question.isMandatory],
       options: [this.options],
       id: [question.id]
     });
   }
 
   addQuestion() {
-    this.dialogRef.close({
-      data: this.questionForm
-    });
+    if ((this.questionForm.value.responseType === 'SSO' || this.questionForm.value.responseType === 'MSO') && this.options.length === 0) {
+      this.showErrorMessage = true;
+    } else {
+      this.dialogRef.close({
+        data: this.questionForm
+      });
+    }
   }
 
   addOption() {

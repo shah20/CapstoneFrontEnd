@@ -11,7 +11,7 @@ import { UtilityService } from 'src/app/services/utility-service/utility-service
 export class LaunchSurveyComponent implements OnInit {
 
   allSurveys = [];
-  takeSurveyLink = 'http://localhost:4200/takeSurvey/';
+  takeSurveyLink;
 
   constructor(
     private adminService: AdminService,
