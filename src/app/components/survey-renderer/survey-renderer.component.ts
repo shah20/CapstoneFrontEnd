@@ -83,7 +83,7 @@ export class SurveyRendererComponent implements OnInit {
       }
     });
     this.surveyResponse.emit(data);
-    console.log('ans', data);
+    // console.log('ans', data);
   }
 
   checkBoxClick(option, formGroup) {

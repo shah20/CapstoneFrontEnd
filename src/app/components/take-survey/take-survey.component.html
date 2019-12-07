@@ -30,8 +30,12 @@
                 </div>
                 <div class="row form-group">
                     <div class="col-5"></div>
-                    <div class="col"><button [disabled]="resultForm.invalid" type="submit" class="btn btn-primary"
-                            (click)="submit()">Next</button></div>
+                    <div class="col">
+                        <button [disabled]="resultForm.invalid" type="submit" class="btn btn-primary" (click)="submit()">Next</button>
+                        <div style="font-size: 80%;color: #dc3545;">
+                            {{userCheckErrorMessage}}
+                        </div>
+                    </div>
                 </div>
             </form>
         </ng-container>

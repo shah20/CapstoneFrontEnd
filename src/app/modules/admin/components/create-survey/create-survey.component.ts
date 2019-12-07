@@ -29,6 +29,8 @@ export class CreateSurveyComponent implements OnInit, OnDestroy {
     {label: 'Number Only', value: 'NO'}
   ];
 
+  surveyExpireMessageflag = false;
+
 
   constructor(
     private dialog: MatDialog,
@@ -119,20 +121,27 @@ export class CreateSurveyComponent implements OnInit, OnDestroy {
     const data = JSON.parse(JSON.stringify(this.adminService.surveyForm.value));
     if (data.validTill) {
       data.validTill = new Date(data.validTill).getTime();
+      if (data.validTill < new Date().getTime()) {
+        this.surveyExpireMessageflag = true;
+      } else {
+        this.surveyExpireMessageflag = false;
+      }
     }
     data.questions.forEach((question) => {
       question.options = question.options.join(',');
     });
-    this.adminService.saveSurvey(data).subscribe((resp: any) => {
-      if (resp.result) {
-        console.log('saved');
-        this.adminService.surveyForm.reset();
-        this.adminService.questionsFormArray = this.formBuilder.array([]);
-        this.adminService.surveyToEdit = null;
-        this.utilityService.openSnackBar(snackBarMessage, 'Ok');
-        this.router.navigate(['admin/launchSurvey']);
-      }
-    });
+    if (!this.surveyExpireMessageflag) {
+      this.adminService.saveSurvey(data).subscribe((resp: any) => {
+        if (resp.result) {
+          console.log('saved');
+          this.adminService.surveyForm.reset();
+          this.adminService.questionsFormArray = this.formBuilder.array([]);
+          this.adminService.surveyToEdit = null;
+          this.utilityService.openSnackBar(snackBarMessage, 'Ok');
+          this.router.navigate(['admin/launchSurvey']);
+        }
+      });
+    }
   }
 
   editQuestion(questionForm, index) {

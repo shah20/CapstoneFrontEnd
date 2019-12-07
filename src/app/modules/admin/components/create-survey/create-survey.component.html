@@ -16,6 +16,9 @@
         </div>
         <div class="col-2">
             <input type="date"  class="form-control"  formControlName="validTill" />
+            <div style="font-size: 80%;color: #dc3545;" *ngIf="surveyExpireMessageflag">
+                Survey can expire in future only
+            </div>
         </div>
     </div>
 </form>
