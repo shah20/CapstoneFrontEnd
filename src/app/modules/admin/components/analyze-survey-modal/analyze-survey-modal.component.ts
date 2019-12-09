@@ -13,6 +13,7 @@ export class AnalyzeSurveyModalComponent implements OnInit {
 
   searchForm: FormGroup;
   responses: any;
+  showResultFlag = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -41,6 +42,7 @@ export class AnalyzeSurveyModalComponent implements OnInit {
     };
     this.adminService.getSurveyResponses(data).subscribe((resp: any) => {
       this.responses = resp.resultObject;
+      this.showResultFlag = true;
       console.log(this.responses);
     });
   }
@@ -69,7 +71,7 @@ export class AnalyzeSurveyModalComponent implements OnInit {
         data += ',"' + question.answer + '"';
       });
 
-      data += '\nTaken on,' + this.datePipe.transform(response.takenOn, 'dd-MMM-yyyy');
+      data += 'Email Id,' + response.emailId + '\nTaken on,' + this.datePipe.transform(response.takenOn, 'dd-MMM-yyyy');
     });
 
     const a = document.createElement('a');

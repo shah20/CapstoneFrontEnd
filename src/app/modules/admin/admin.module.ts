@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyFilterPipe } from 'src/app/pipes/survey-filter/survey-filter.pipe';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { AnalyzeSurveyModalComponent } from './components/analyze-survey-modal/analyze-survey-modal.component';
+import { ChartModalComponent } from './components/chart-modal/chart-modal.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AnalyzeSurveyModalComponent } from './components/analyze-survey-modal/a
     AddQuestionComponent,
     SurveyFilterPipe,
     CreateUserComponent,
-    AnalyzeSurveyModalComponent
+    AnalyzeSurveyModalComponent,
+    ChartModalComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { AnalyzeSurveyModalComponent } from './components/analyze-survey-modal/a
   ],
   entryComponents: [
     AddQuestionComponent,
-    AnalyzeSurveyModalComponent
+    AnalyzeSurveyModalComponent,
+    ChartModalComponent
   ],
   providers: [
     DatePipe

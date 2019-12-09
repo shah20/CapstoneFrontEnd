@@ -58,4 +58,7 @@ export class AdminService {
     return this.http.post(this.serviceUrl + '/admin/getSurveyResponses', data);
   }
 
+  getSurveyResponsesForChart() {
+    return this.http.get(this.serviceUrl + '/admin/getSurveyResponsesForChart');
+  }
 }
