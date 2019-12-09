@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AdminService } from 'src/app/services/admin-service/admin.service';
 import { UtilityService } from 'src/app/services/utility-service/utility-service.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AnalyzeSurveyModalComponent } from '../analyze-survey-modal/analyze-survey-modal.component';
 import { ChartModalComponent } from '../chart-modal/chart-modal.component';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-analyze-survey',
@@ -14,10 +15,12 @@ import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 export class AnalyzeSurveyComponent implements OnInit {
 
   surveys = [];
+  chart: Chart;
 
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog,
+    private elementRef: ElementRef,
     private utilityService: UtilityService) { }
 
   ngOnInit() {
@@ -45,7 +48,7 @@ export class AnalyzeSurveyComponent implements OnInit {
 
   showGraph() {
     const dialog = this.dialog.open(ChartModalComponent, {
-      height: '600px',
+      height: '460px',
       width: '800px'
     });
 

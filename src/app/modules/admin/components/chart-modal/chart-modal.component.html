@@ -1,2 +1,14 @@
-FDGDSFG
-<canvas *ngIf="showChartFlag" id="bar-chart" width="800" height="450"></canvas>
+<div class="row">
+    <div class="col-11">
+        <h4>
+            Survey Ananlysis
+        </h4>
+    </div>
+    <div class="col-1">
+        <i (click)="exportToCsv()" class="fa fa-download" style="cursor:pointer"
+            title="Download"></i>
+    </div>
+</div>
+<div>
+    <canvas id="canvas">{{ chart }}</canvas>
+</div>

@@ -53,8 +53,12 @@ export class TakeSurveyComponent implements OnInit {
     this.resultForm.get('takenOn').setValue(new Date().getTime());
     const data = Object.assign({}, this.resultForm.value, surveyResponse);
     this.userService.saveSurveyResponse(data).subscribe((resp: any) => {
-      this.router.navigate(['../listSurveys']);
-      this.utilityService.openSnackBar('Response saved successfully', 'Ok');
+      if (resp.result) {
+        this.router.navigate(['../listSurveys']);
+        this.utilityService.openSnackBar('Response saved successfully', 'Ok');
+      } else {
+        this.utilityService.openSnackBar('Some error occured', 'Ok');
+      }
     });
     console.log('data', data);
   }

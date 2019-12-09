@@ -11,42 +11,64 @@ import { Chart } from 'chart.js';
 export class ChartModalComponent implements OnInit {
 
   showChartFlag = false;
+  chart: Chart;
 
   @ViewChild('bar-chart', {static: false}) el: ElementRef;
 
   constructor(
     private adminService: AdminService,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    private elementRef: ElementRef
     ) { }
 
   ngOnInit() {
     this.adminService.getSurveyResponsesForChart().subscribe((resp: any) => {
       console.log('------------------', resp);
-      this.createChart();
+      this.setChart(resp.resultObject);
       this.showChartFlag = true;
     });
   }
 
-  createChart() {
-    const chart = new Chart(this.el, {
+  setChart(data) {
+    const label = [];
+    const value = [];
+    Object.keys(data).forEach((resp: any) => {
+      label.push(resp);
+      value.push(data[resp]);
+    });
+    this.chart = new Chart(document.getElementById('canvas'), {
       type: 'bar',
       data: {
-        labels: ['Africa', 'Asia', 'Europe', 'Latin America', 'North America'],
-        datasets: [
-          {
-            label: 'Population (millions)',
-            backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9', '#c45850'],
-            data: [2478, 5267, 734, 784, 433]
-          }
-        ]
+        labels: label,
+        datasets: [{
+          barPercentage: 0.5,
+          borderColor: 'lightBlue',
+          backgroundColor: 'lightBlue',
+          barThickness: 50,
+          hoverBackgroundColor: 'blue',
+          data: value
+        }]
       },
       options: {
-        legend: { display: false },
-        title: {
-          display: true,
-          text: 'Predicted world population (millions) in 2050'
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+          }],
+          yAxes: [{
+            display: true
+          }],
+        },
+        animation: {
+          // duration: 5
         }
       }
-  });
+    });
+  }
+
+  exportToCsv() {
+    
   }
 }
