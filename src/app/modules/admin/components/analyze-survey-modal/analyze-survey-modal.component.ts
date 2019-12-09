@@ -55,7 +55,8 @@ export class AnalyzeSurveyModalComponent implements OnInit {
     let data =  'Survey Name,' + this.dialogData.surveyName +
                 '\nCreated on,' + this.datePipe.transform(this.dialogData.createdOn, 'dd-MMM-yyyy') +
                 ',Closed on,' + this.datePipe.transform(this.dialogData.validTill, 'dd-MMM-yyyy') +
-                '\nStatus,' + this.dialogData.status;
+                '\nStatus,' + this.dialogData.status +
+                '\nNo of Responses,' + this.responses.length;
 
     if (this.responses.length > 0) {
       data += '\n\n,,';
@@ -71,7 +72,7 @@ export class AnalyzeSurveyModalComponent implements OnInit {
         data += ',"' + question.answer + '"';
       });
 
-      data += 'Email Id,' + response.emailId + '\nTaken on,' + this.datePipe.transform(response.takenOn, 'dd-MMM-yyyy');
+      data += '\nEmail Id,' + response.emailId + '\nTaken on,' + this.datePipe.transform(response.takenOn, 'dd-MMM-yyyy');
     });
 
     const a = document.createElement('a');
