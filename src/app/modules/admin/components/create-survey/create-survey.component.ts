@@ -79,7 +79,8 @@ export class CreateSurveyComponent implements OnInit, OnDestroy {
       createdOn: [survey.createdOn],
       status: [survey.status],
       id: [survey.id],
-      validTill: [survey.validTill]
+      validTill: [survey.validTill],
+      description: [survey.description, [Validators.required]]
     });
   }
 

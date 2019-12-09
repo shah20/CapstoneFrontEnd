@@ -46,4 +46,16 @@ export class AdminService {
     return this.http.delete(this.serviceUrl + '/admin/getPublishedSurvey')
   }
 
+  createUser(data) {
+    return this.http.post(this.serviceUrl + '/admin/createUser', data);
+  }
+
+  getSurveysForAnalysis() {
+    return this.http.get(this.serviceUrl + '/admin/getSurveysForAnalysis');
+  }
+
+  getSurveyResponses(data) {
+    return this.http.post(this.serviceUrl + '/admin/getSurveyResponses', data);
+  }
+
 }

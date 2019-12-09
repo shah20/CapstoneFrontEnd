@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -10,11 +10,21 @@ import { AnalyzeSurveyComponent } from './components/analyze-survey/analyze-surv
 import { AddQuestionComponent } from './components/add-question/add-question.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyFilterPipe } from 'src/app/pipes/survey-filter/survey-filter.pipe';
+import { CreateUserComponent } from './components/create-user/create-user.component';
+import { AnalyzeSurveyModalComponent } from './components/analyze-survey-modal/analyze-survey-modal.component';
 
 
 @NgModule({
-  declarations: [AdminLandingComponent, CreateSurveyComponent, LaunchSurveyComponent, AnalyzeSurveyComponent, AddQuestionComponent,
-    SurveyFilterPipe],
+  declarations: [
+    AdminLandingComponent,
+    CreateSurveyComponent,
+    LaunchSurveyComponent,
+    AnalyzeSurveyComponent,
+    AddQuestionComponent,
+    SurveyFilterPipe,
+    CreateUserComponent,
+    AnalyzeSurveyModalComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -23,9 +33,11 @@ import { SurveyFilterPipe } from 'src/app/pipes/survey-filter/survey-filter.pipe
     ReactiveFormsModule
   ],
   entryComponents: [
-    AddQuestionComponent
+    AddQuestionComponent,
+    AnalyzeSurveyModalComponent
   ],
   providers: [
+    DatePipe
   ]
 })
 export class AdminModule { }

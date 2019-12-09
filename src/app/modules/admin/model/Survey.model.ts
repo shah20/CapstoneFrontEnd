@@ -7,4 +7,5 @@ export class Survey {
     surveyName: string;
     questions: Question[] = [];
     validTill: number;
+    description: string;
 }

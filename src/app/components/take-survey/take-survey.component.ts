@@ -28,8 +28,8 @@ export class TakeSurveyComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.formInitialize();
     this.surveyId = this.activatedRoute.snapshot.params.survyeId;
+    this.formInitialize();
     this.getSurvey();
   }
 
@@ -37,7 +37,8 @@ export class TakeSurveyComponent implements OnInit {
     this.resultForm = this.formbuilder.group({
       emailId: ['', [Validators.required]],
       name: ['', [Validators.required]],
-      takenOn: ['']
+      takenOn: [''],
+      surveyId: [this.surveyId]
     });
   }
 

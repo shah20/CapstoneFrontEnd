@@ -4,6 +4,7 @@ import { AdminLandingComponent } from './components/admin-landing/admin-landing.
 import { CreateSurveyComponent } from './components/create-survey/create-survey.component';
 import { LaunchSurveyComponent } from './components/launch-survey/launch-survey.component';
 import { AnalyzeSurveyComponent } from './components/analyze-survey/analyze-survey.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: 'createSurvey', component: CreateSurveyComponent },
       { path: 'launchSurvey', component: LaunchSurveyComponent },
-      { path: 'analyzeSurvey', component: AnalyzeSurveyComponent }
+      { path: 'analyzeSurvey', component: AnalyzeSurveyComponent },
+      { path: 'createAdmin', component: CreateUserComponent }
     ]
   }
 ];
