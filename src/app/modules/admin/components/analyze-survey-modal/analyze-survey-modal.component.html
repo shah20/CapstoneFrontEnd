@@ -31,6 +31,9 @@
         </div>
     </form>
     <ng-container *ngIf="showResultFlag">
+        <ng-container *ngIf="responses">
+            No responses yet
+        </ng-container>
         <ng-container *ngFor="let response of responses;let i = index">
             <div>
                 <div class="row">

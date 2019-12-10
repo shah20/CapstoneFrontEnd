@@ -55,7 +55,7 @@ export class SurveyRendererComponent implements OnInit {
         const options = question.options.split(',');
         questionForm.addControl('options', new FormControl(options));
         if (question.responseType === 'MSO') {
-          answer = [];
+          answer = '';
         }
       }
       if (question.isMandatory) {
@@ -77,20 +77,23 @@ export class SurveyRendererComponent implements OnInit {
 
   submit() {
     const data = JSON.parse(JSON.stringify(this.surveyForm.value));
-    data.questions.forEach(question => {
-      if (question.responseType === 'MSO') {
-        question.answer = question.answer.join(',');
-      }
-    });
+    // data.questions.forEach(question => {
+    //   if (question.responseType === 'MSO') {
+    //     question.answer = question.answer.join(',');
+    //   }
+    // });
+    console.log(this.surveyForm);
     this.surveyResponse.emit(data);
-    // console.log('ans', data);
+    console.log('ans', data);
   }
 
   checkBoxClick(option, formGroup) {
-    if (formGroup.value.answer.includes(option)) {
-      formGroup.value.answer.splice( formGroup.value.answer.indexOf(option), 1);
+    const answer = formGroup.value.answer === '' ? [] : formGroup.value.answer.split(',');
+    if (answer.includes(option)) {
+      answer.splice(answer.indexOf(option), 1);
     } else {
-      formGroup.value.answer.push(option);
+     answer.push(option);
     }
+    formGroup.get('answer').setValue(answer.join(','));
   }
 }
