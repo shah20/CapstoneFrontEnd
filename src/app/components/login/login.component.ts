@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.adminService.login(this.logInForm.value).subscribe((resp: any) => {
       if (resp.result) {
+        localStorage.setItem('isLoggedIn', 'true');
         this.router.navigate(['/admin']);
       } else {
         this.showError = true;

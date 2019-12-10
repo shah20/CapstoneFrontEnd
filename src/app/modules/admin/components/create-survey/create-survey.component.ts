@@ -30,6 +30,7 @@ export class CreateSurveyComponent implements OnInit, OnDestroy {
   ];
 
   surveyExpireMessageflag = false;
+  changesSaved = false;
 
 
   constructor(
@@ -139,6 +140,7 @@ export class CreateSurveyComponent implements OnInit, OnDestroy {
           this.adminService.questionsFormArray = this.formBuilder.array([]);
           this.adminService.surveyToEdit = null;
           this.utilityService.openSnackBar(snackBarMessage, 'Ok');
+          this.changesSaved = true;
           this.router.navigate(['admin/launchSurvey']);
         }
       });
@@ -165,5 +167,13 @@ export class CreateSurveyComponent implements OnInit, OnDestroy {
 
   deleteQuestion(index) {
     this.adminService.questionsFormArray.removeAt(index);
+  }
+
+  canDeactivate() {
+    if (this.adminService.surveyForm.dirty || this.adminService.questionsFormArray.controls.length > 0) {
+        return window.confirm('Looks like there are unsaved changes. Do you still want to proceed?');
+    } else {
+      return true;
+    }
   }
 }

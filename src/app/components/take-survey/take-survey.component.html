@@ -26,6 +26,10 @@
                             *ngIf="resultForm.controls['emailId'].touched && resultForm.controls['emailId'].hasError('required')">
                             Email ID is required
                         </div>
+                        <div style="font-size: 80%;color: #dc3545;"
+                            *ngIf="resultForm.controls['emailId'].touched && resultForm.controls['emailId'].hasError('email')">
+                            Invalid Email ID
+                        </div>
                     </div>
                 </div>
                 <div class="row form-group">

@@ -17,6 +17,7 @@ export class TakeSurveyComponent implements OnInit {
   showSurvey = false;
   resultForm: FormGroup;
   userCheckErrorMessage = '';
+  responseSaved = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,7 +36,7 @@ export class TakeSurveyComponent implements OnInit {
 
   formInitialize() {
     this.resultForm = this.formbuilder.group({
-      emailId: ['', [Validators.required]],
+      emailId: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required]],
       takenOn: [''],
       surveyId: [this.surveyId]
@@ -45,7 +46,7 @@ export class TakeSurveyComponent implements OnInit {
   getSurvey() {
     this.adminService.getSurvey(this.surveyId).subscribe((resp: any) => {
       this.survey = resp.resultObject;
-      console.log('survye', this.survey);
+      console.log('survey', this.survey);
     });
   }
 
@@ -55,6 +56,7 @@ export class TakeSurveyComponent implements OnInit {
     this.userService.saveSurveyResponse(data).subscribe((resp: any) => {
       if (resp.result) {
         this.router.navigate(['../listSurveys']);
+        this.responseSaved = true;
         this.utilityService.openSnackBar('Response saved successfully', 'Ok');
       } else {
         this.utilityService.openSnackBar('Some error occured', 'Ok');
@@ -66,6 +68,7 @@ export class TakeSurveyComponent implements OnInit {
   submit() {
     this.userService.checkUser(this.resultForm.value).subscribe((resp: any) => {
       if (resp.result) {
+        this.responseSaved = false;
         this.showSurvey = true;
         this.userCheckErrorMessage = '';
       } else {
@@ -73,5 +76,13 @@ export class TakeSurveyComponent implements OnInit {
         console.log('as');
       }
     });
+  }
+
+  canDeactivate() {
+    if (!this.responseSaved) {
+        return window.confirm('Looks like there are unsaved changes. Do you still want to proceed?');
+    } else {
+      return true;
+    }
   }
 }

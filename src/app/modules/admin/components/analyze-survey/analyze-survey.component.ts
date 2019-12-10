@@ -31,7 +31,8 @@ export class AnalyzeSurveyComponent implements OnInit {
     const dialog = this.dialog.open(AnalyzeSurveyModalComponent, {
       height: '600px',
       width: '800px',
-      data: survey
+      data: survey,
+      panelClass: 'custom-dialog-container'
     });
 
     dialog.afterClosed().subscribe((result: any) => {
@@ -50,6 +51,8 @@ export class AnalyzeSurveyComponent implements OnInit {
     const dialog = this.dialog.open(ChartModalComponent, {
       height: '460px',
       width: '800px'
+      ,
+      panelClass: 'custom-dialog-container'
     });
 
     dialog.afterClosed().subscribe((result: any) => {
